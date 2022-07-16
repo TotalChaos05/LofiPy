@@ -1,3 +1,4 @@
 keyboard~=0.13.5
-pafy @ https://github.com/TotalChaos05/pafy/tarball/master
 pynput~=1.7.6
+future~=0.18.2
+pafy~=0.5.5
