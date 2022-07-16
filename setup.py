@@ -5,9 +5,10 @@ includes = []
 excludes = ['']
 packages = ['sys', 'time', 'tkinter', 'keyboard', 'pafy', 'vlc', 'pynput']
 
-base = None
-if (sys.platform == "win32"):
-    base = "Win32GUI"
+
+
+exe = [Executable("main.py", base = "Win32GUI")]
+
 
 setup(
     name = 'LofiPy',
@@ -16,5 +17,5 @@ setup(
     author = 'Basil',
     author_email = 'ba...@null.com',
     options = {'build_exe': {'includes':includes,'excludes':excludes,'packages':packages,'include_files':includefiles}},
-    executables = [Executable('main.py', icon='icon.ico')]
+    executables = exe
 )
