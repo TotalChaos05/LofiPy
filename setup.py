@@ -3,11 +3,11 @@ import sys
 includefiles = ['forest-dark.tcl', "forest-dark"]
 includes = []
 excludes = ['']
-packages = ['sys', 'time', 'tkinter', 'keyboard', 'pafy', 'vlc', 'win32gui']
+packages = ['sys', 'time', 'tkinter', 'keyboard', 'pafy', 'vlc', 'pygetwindow', 'pynput']
 
 
 
-exe = [Executable("main.py", base = "Win32GUI", icon='icon.ico')]
+exe = [Executable("main.py", base = 'win32gui', icon='icon.ico')]
 
 
 setup(

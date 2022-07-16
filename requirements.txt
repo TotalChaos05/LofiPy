@@ -2,3 +2,4 @@ keyboard~=0.13.5
 pynput~=1.7.6
 future~=0.18.2
 pafy~=0.5.5
+PyGetWindow~=0.0.9
