@@ -2,7 +2,7 @@ import sys
 import time
 import tkinter as tk
 import tkinter.ttk as ttk
-
+from win32gui import GetWindowText, GetForegroundWindow
 import keyboard
 import pafy
 import vlc
@@ -95,26 +95,38 @@ def playvideo(url):
     best = video.getbest()
     # creating vlc media player object
     media = vlc.MediaPlayer(best.url)
-
+    media.play()
     # start playing video
 
+    desired_window_name = "VLC (Direct3D11 output)"
+    # for some reason vlc doesn't like it when this isn't her
+
+    current_window = (GetWindowText(GetForegroundWindow()))
+
+
+
     def on_scroll(x, y, dx, dy):
-        vlc.libvlc_audio_set_volume(p_mi=media, i_volume=vlc.libvlc_audio_get_volume(media) + (dy * 5))
+        if desired_window_name == current_window:
+            vlc.libvlc_audio_set_volume(p_mi=media, i_volume=vlc.libvlc_audio_get_volume(media) + (dy * 5))
 
     listener = mouse.Listener(
         on_scroll=on_scroll)
     listener.start()
 
-    media.play()
+
+
+
 
     while True:
-        if keyboard.is_pressed('Esc'):
+        if keyboard.is_pressed('Esc') and desired_window_name == current_window:
             print('exiting...')
             sys.exit(0)
-        elif keyboard.is_pressed('f11'):
+        elif keyboard.is_pressed('f11') and desired_window_name == current_window:
             vlc.libvlc_toggle_fullscreen(p_mi=media)
             time.sleep(.5)
         else:
+            current_window = (GetWindowText(GetForegroundWindow()))
+            desired_window_name = "VLC (Direct3D11 output)"
             # for some reason vlc doesn't like it when this isn't here
             pass
 
