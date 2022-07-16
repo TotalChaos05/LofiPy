@@ -3,7 +3,7 @@ import sys
 includefiles = ['forest-dark.tcl', "forest-dark"]
 includes = []
 excludes = ['']
-packages = ['sys', 'time', 'tkinter', 'keyboard', 'pafy', 'vlc']
+packages = ['sys', 'time', 'tkinter', 'keyboard', 'pafy', 'vlc', 'win32gui']
 
 
 
