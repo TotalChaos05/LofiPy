@@ -12,7 +12,7 @@ exe = [Executable("main.py", base = 'win32gui', icon='icon.ico')]
 
 setup(
     name = 'LofiPy',
-    version = '1.0',
+    version = '1.1',
     description = 'LofiPy',
     author = 'Basil',
     author_email = 'ba...@null.com',
