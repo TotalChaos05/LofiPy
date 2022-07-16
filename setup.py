@@ -7,7 +7,7 @@ packages = ['sys', 'time', 'tkinter', 'keyboard', 'pafy', 'vlc', 'pynput']
 
 
 
-exe = [Executable("main.py", base = "Win32GUI")]
+exe = [Executable("main.py", base = "Win32GUI", icon='icon.ico')]
 
 
 setup(
