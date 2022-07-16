@@ -98,8 +98,8 @@ def playvideo(url):
 
     # start playing video
 
-    def on_scroll(y):
-        vlc.libvlc_audio_set_volume(p_mi=media, i_volume=vlc.libvlc_audio_get_volume(media) + (y * 5))
+    def on_scroll(x, y, dx, dy):
+        vlc.libvlc_audio_set_volume(p_mi=media, i_volume=vlc.libvlc_audio_get_volume(media) + (dy * 5))
 
     listener = mouse.Listener(
         on_scroll=on_scroll)
