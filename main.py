@@ -1,19 +1,23 @@
 import sys
-import vlc
-import pafy
-import keyboard
+import time
 import tkinter as tk
 import tkinter.ttk as ttk
-import time
+
+import keyboard
+import pafy
+import vlc
+from pynput import mouse
 
 
 def menu():
     window = tk.Tk()
 
     window.title("LofiPy")
-    window.geometry('500x700')
-    window.tk.call('source', 'forest-light.tcl')
-    ttk.Style().theme_use('forest-light')
+    window.geometry('425x350')
+    window.tk.call('source', 'forest-dark.tcl')
+    ttk.Style().theme_use('forest-dark')
+
+    # window.resizable(False, False)
 
     def ok_button_command():
 
@@ -33,24 +37,54 @@ def menu():
     sel = tk.IntVar()
     text = tk.StringVar()
 
-    op1 = ttk.Radiobutton(window, style='TRadiobutton', value=1, text='lofi hip hop radio - beats to relax/study to', variable=sel)
-    op2 = ttk.Radiobutton(window, style='TRadiobutton', value=2, text='lofi hip hop radio - beats to sleep/chill to', variable=sel)
-    op3 = ttk.Radiobutton(window, style='TRadiobutton', value=3, text='custom livestream', variable=sel)
-    textInput = ttk.Entry(window, exportselection=False, textvariable=text)
-    ok_button = ttk.Button(window, style='TButton', text="Ok", command=ok_button_command)
-    instructions = tk.Text(window,)
-    instructions.pack(side='right')
-    instructions.insert(1.0, '''LofiPy 
-                        A dedicated app for playing Lofi Girl's YouTube Livestreams
-                        Esc: Exit Video Player
-                        F11: Fullscreen''')
+    op1 = ttk.Radiobutton(window,
+                          style='TRadiobutton',
+                          value=1,
+                          text='lofi hip hop radio - beats to relax/study to',
+                          variable=sel)
+
+    op2 = ttk.Radiobutton(window,
+                          style='TRadiobutton',
+                          value=2, text='lofi hip hop radio - beats to sleep/chill to',
+                          variable=sel)
+
+    op3 = ttk.Radiobutton(window,
+                          style='TRadiobutton',
+                          value=3,
+                          text='custom livestream',
+                          variable=sel, )
+
+    text_input = ttk.Entry(window,
+                           exportselection=False,
+                           textvariable=text)
+
+    ok_button = ttk.Button(window,
+                           style='TButton',
+                           text="Ok",
+                           command=ok_button_command)
+    instructions = tk.Label(window,
+                            text='''
+A dedicated app for playing Lofi Girl's YouTube Livestreams
+
+Esc: Exit Video Player
+                            
+F11: Fullscreen
+
+Scroll Wheel: Volume Up/Down''',
+                            font=("Thoma", 12))
+
+    title = tk.Label(window,
+                     text="LofiPy",
+                     font=("Thoma", 44))
+
+    title.grid(column=0, row=4, columnspan=2)
+
+    instructions.grid(column=0, row=5, columnspan=2)
     op1.grid(column=0, row=0, sticky='w')
     op2.grid(column=0, row=1, sticky='w')
     op3.grid(column=0, row=2, sticky='w')
-    textInput.grid(column=1, row=2, sticky='w')
-    ok_button.grid(column=0, row=3)
-
-
+    text_input.grid(column=1, row=2, sticky='w')
+    ok_button.grid(column=0, row=3, columnspan=2, sticky='nsew')
 
     window.mainloop()
 
@@ -61,7 +95,16 @@ def playvideo(url):
     best = video.getbest()
     # creating vlc media player object
     media = vlc.MediaPlayer(best.url)
+
     # start playing video
+
+    def on_scroll(y):
+        vlc.libvlc_audio_set_volume(p_mi=media, i_volume=vlc.libvlc_audio_get_volume(media) + (y * 5))
+
+    listener = mouse.Listener(
+        on_scroll=on_scroll)
+    listener.start()
+
     media.play()
 
     while True:
@@ -72,14 +115,8 @@ def playvideo(url):
             vlc.libvlc_toggle_fullscreen(p_mi=media)
             time.sleep(.5)
         else:
-            #for some reason vlc doesn't like it when this isn't here
+            # for some reason vlc doesn't like it when this isn't here
             pass
 
 
-
-
-
 menu()
-
-
-
